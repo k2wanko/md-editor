@@ -1,0 +1,26 @@
+path /items {
+    read() { true }
+    /{item_id} is Item {
+        index() { ["created"] }
+        write() { true }
+    }
+}
+
+type Item {
+    // Raw is markdown.
+    raw: String,
+
+    // Created, Updated is Unix timestamp
+    created: Created,
+    updated: Updated,
+}
+
+type Created extends Number {
+    validate() { (isNew(this) && this == now) || prior(this) == this }
+}
+
+type Updated extends Number {
+    validate() { (isNew(this) && this == now) || (this > prior(this) && this == now)}
+}
+
+isNew(ref) { prior(ref) == null }
