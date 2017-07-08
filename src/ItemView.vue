@@ -6,7 +6,7 @@
 </template>
 
 
-<<script>
+<script>
 import Preview from './Preview.vue'
 export default {
   name: 'item-view',
