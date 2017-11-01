@@ -5,14 +5,16 @@
   "author": "Kazuhiro Kubota <k2.wanko@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.client.js --open --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.client.js --hot",
     "dev:build": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+    "clean": "rimraf functions/dist",
     "build": "run-p build:*",
     "build:app": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "build:firebase-bolt": "firebase-bolt database.rules.bolt",
     "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules",
     "serve": "firebase serve --only hosting,functions",
-    "deploy": "firebase deploy"
+    "deploy": "run-s clean build deploy:**",
+    "deploy:firebase": "firebase deploy"
   },
   "dependencies": {
     "firebase": "^4.1.3",
@@ -36,6 +38,7 @@
     "firebase-tools": "^3.9.1",
     "html-webpack-plugin": "^2.29.0",
     "npm-run-all": "^4.0.2",
+    "rimraf": "^2.6.2",
     "vue-loader": "^12.1.0",
     "vue-server-renderer": "^2.3.4",
     "vue-style-loader": "^3.0.1",
